@@ -1,5 +1,6 @@
 import React from "react";
-import "./directory.styles.scss";
+
+import styled from "styled-components";
 
 import MenuItme from "../menu-items/menu-item.component";
 
@@ -42,7 +43,7 @@ class Directory extends React.Component {
 
   render() {
     return (
-      <div className="directory-menu">
+      <DirectoryMenu>
         {this.state.section.map(({ id, title, imageUrl, size }) => (
           <MenuItme
             key={id}
@@ -51,9 +52,16 @@ class Directory extends React.Component {
             size={size}
           />
         ))}
-      </div>
+      </DirectoryMenu>
     );
   }
 }
+
+const DirectoryMenu = styled.div`
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+`;
 
 export default Directory;
