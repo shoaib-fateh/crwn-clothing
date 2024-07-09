@@ -1,7 +1,6 @@
 import React from "react";
 import styled from "styled-components";
 
-import { Link } from "react-router-dom";
 
 const MenuItem = ({ title, imageUrl, size, history, url, match }) => {
   return (
@@ -9,13 +8,10 @@ const MenuItem = ({ title, imageUrl, size, history, url, match }) => {
       size={size}
       style={{ backgroundImage: `url("${imageUrl}")` }}
     >
-
       <div className="background-image" />
       <div className="content">
-        <Link to={`/${url}`} >
         <h1 className="title">{title.toUpperCase()}</h1>
         <span className="subtitle">SHOP NOW</span>
-        </Link>
       </div>
     </MenuItemContainer>
   );
