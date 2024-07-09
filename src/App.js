@@ -1,11 +1,16 @@
 import React from "react";
 
-import HomePage from "./pages/homepage/homepage.component";
+import { Routes, Route } from "react-router-dom";
 
+import HomePage from "./pages/homepage/homepage.component";
+import HatsPage from "./pages/hats/hats.component";
 const App = () => {
   return (
     <div className="MainApp">
-      <HomePage />
+      <Routes>
+        <Route path="/" Component={HomePage} />
+        <Route path="/hats" Component={HatsPage} />
+      </Routes>
     </div>
   );
 };

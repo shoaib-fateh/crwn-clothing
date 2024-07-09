@@ -1,6 +1,26 @@
 import React from "react";
 import styled from "styled-components";
 
+import { Link } from "react-router-dom";
+
+const MenuItem = ({ title, imageUrl, size, history, url, match }) => {
+  return (
+    <MenuItemContainer
+      size={size}
+      style={{ backgroundImage: `url("${imageUrl}")` }}
+    >
+
+      <div className="background-image" />
+      <div className="content">
+        <Link to={`/${url}`} >
+        <h1 className="title">{title.toUpperCase()}</h1>
+        <span className="subtitle">SHOP NOW</span>
+        </Link>
+      </div>
+    </MenuItemContainer>
+  );
+};
+
 const MenuItemContainer = styled.div`
   height: ${({ size }) => (size ? "380px" : "240px")};
   min-width: 30%;
@@ -65,22 +85,5 @@ const MenuItemContainer = styled.div`
     }
   }
 `;
-
-const MenuItem = ({ title, imageUrl, size }) => {
-  return (
-    <MenuItemContainer
-      size={size}
-      style={{ backgroundImage: `url("${imageUrl}")` }}
-    >
-      <div className="background-image" />
-
-      <div className="content">
-        <h1 className="title">{title.toUpperCase()}</h1>
-        <span className="subtitle">SHOP NOW</span>
-      </div>
-    </MenuItemContainer>
-  );
-};
-
 
 export default MenuItem;
