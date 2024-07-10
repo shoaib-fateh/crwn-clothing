@@ -7,21 +7,36 @@ import ShopPage from "./pages/shop/shop.component";
 import styled from "styled-components";
 import Header from "./components/header/header.component";
 import SignInAndSignUP from "./pages/sign-in-and-sign-up/sign-in-and-sign-up.component";
-const App = () => {
-  return (
-    <MainAppStyled>
-      <Header />
-      <Routes>
-        <Route path="/" Component={HomePage} />
-        <Route path="/shop" Component={ShopPage} />
-        <Route path="/signin" Component={SignInAndSignUP} />
-      </Routes>
-    </MainAppStyled>
-  );
-};
+import { auth } from "./firebase/firebase.utils";
+
+class App extends React.Component {
+  constructor() {
+    super();
+    this.state = {
+      currentUser: null,
+    };
+  }
+
+  unsubscribeFromAuth = null;
+
+  render() {
+    return (
+      <MainAppStyled>
+        <Header />
+        <Routes>
+          <Route path="/" Component={HomePage} />
+          <Route path="/shop" Component={ShopPage} />
+          <Route path="/signin" Component={SignInAndSignUP} />
+        </Routes>
+      </MainAppStyled>
+    );
+  }
+}
 
 const MainAppStyled = styled.div`
-  font-family: "Open sans Condensed", sans-serif;
+  font-family: "Encode Sans Condensed", sans-serif;
+  font-weight: 400;
+  font-style: normal;
   padding: 20px 80px;
 
   a {
