@@ -51,10 +51,16 @@ class SignIn extends React.Component {
             required
           />
 
-          <CustomButton type="submit">Submit Form</CustomButton>
-          <CustomButton onClick={signInWithGoogle} type="button">
-            Sign In With Google
-          </CustomButton>
+          <div className="button">
+            <CustomButton type="submit">Submit Form</CustomButton>
+            <CustomButton
+              onClick={signInWithGoogle}
+              type="button"
+              isGoogleSignIn
+            >
+              Sign In With Google
+            </CustomButton>
+          </div>
         </form>
       </SignInStyled>
     );
@@ -62,9 +68,14 @@ class SignIn extends React.Component {
 }
 
 const SignInStyled = styled.div`
-  width: 30vw;
+  width: 450px;
   display: flex;
   flex-direction: column;
+
+  .button {
+    display: flex;
+    justify-content: space-between;
+  }
 
   .title {
     margin: 10px 0;

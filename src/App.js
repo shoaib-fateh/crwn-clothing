@@ -19,10 +19,20 @@ class App extends React.Component {
 
   unsubscribeFromAuth = null;
 
+  componentDidMount() {
+    this.unsubscribeFromAuth = auth.onAuthStateChanged((user) => {
+      this.state.currentUser = user;
+    });
+  }
+
+  componentWillUnmount() {
+    this.unsubscribeFromAuth();
+  }
+
   render() {
     return (
       <MainAppStyled>
-        <Header />
+        <Header currentUser={this.state.currentUser} />
         <Routes>
           <Route path="/" Component={HomePage} />
           <Route path="/shop" Component={ShopPage} />
@@ -42,6 +52,10 @@ const MainAppStyled = styled.div`
   a {
     text-decoration: none;
     color: #000;
+  }
+
+  * {
+    box-sizing: border-box;
   }
 `;
 

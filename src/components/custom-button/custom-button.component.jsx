@@ -1,10 +1,13 @@
 import React from "react";
 import styled from "styled-components";
 
-const CustomButton = ({ children, ...OP }) => {
+const CustomButton = ({ children, isGoogleSignIn, ...OP }) => {
   return (
     <CustomButtonStyled>
-      <button className="custom-button" {...OP}>
+      <button
+        className={`${isGoogleSignIn ? "google-sign-in" : ""} custom-button`}
+        {...OP}
+      >
         {children}
       </button>
     </CustomButtonStyled>
@@ -23,7 +26,7 @@ const CustomButtonStyled = styled.div`
     background-color: black;
     color: white;
     text-transform: uppercase;
-    font-family: "Open Sans Condensed";
+    font-family: "Open Sans Condensed", sans-serif;
     font-weight: bolder;
     border: none;
     cursor: pointer;
@@ -32,6 +35,16 @@ const CustomButtonStyled = styled.div`
       background-color: white;
       color: black;
       border: 1px solid black;
+    }
+
+    &.google-sign-in {
+      background-color: #4285f4;
+      color: white;
+      border: none;
+
+      &:hover {
+        background-color: #357ae8;
+      }
     }
   }
 `;
