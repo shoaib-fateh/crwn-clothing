@@ -4,6 +4,8 @@ import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { auth } from "../../firebase/firebase.utils";
 
+import { connect } from "react-redux";
+
 const Header = ({ currentUser }) => {
   return (
     <HeaderStyled>
@@ -58,4 +60,8 @@ const HeaderStyled = styled.div`
   }
 `;
 
-export default Header;
+const mapStateToProps = (state) => ({
+  currentUser: state.user.currentUser,
+});
+
+export default connect(mapStateToProps)(Header);

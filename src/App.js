@@ -22,7 +22,6 @@ class App extends React.Component {
       console.log("Authentication state changed:", userAuth); // Add this line
       if (userAuth) {
         const userRef = await createUserProfileDocument(userAuth);
-        console.log("User ref:", userRef); // Log the result of createUserProfileDocument
         if (userRef) {
           userRef.onSnapshot((snapshot) => {
             console.log(snapshot.data());
@@ -41,7 +40,7 @@ class App extends React.Component {
   render() {
     return (
       <MainAppStyled>
-        <Header currentUser={this.state.currentUser} />
+        <Header />
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/shop" element={<ShopPage />} />
