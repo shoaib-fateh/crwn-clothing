@@ -1,13 +1,11 @@
 import React from "react";
-
 import { Routes, Route } from "react-router-dom";
-
 import HomePage from "./pages/homepage/homepage.component";
 import ShopPage from "./pages/shop/shop.component";
 import styled from "styled-components";
 import Header from "./components/header/header.component";
 import SignInAndSignUP from "./pages/sign-in-and-sign-up/sign-in-and-sign-up.component";
-import { auth } from "./firebase/firebase.utils";
+import { auth, createUserProfileDocument } from "./firebase/firebase.utils";
 
 class App extends React.Component {
   constructor() {
@@ -20,13 +18,24 @@ class App extends React.Component {
   unsubscribeFromAuth = null;
 
   componentDidMount() {
-    this.unsubscribeFromAuth = auth.onAuthStateChanged((user) => {
-      this.state.currentUser = user;
+    this.unsubscribeFromAuth = auth.onAuthStateChanged(async (userAuth) => {
+      console.log("Authentication state changed:", userAuth); // Add this line
+      if (userAuth) {
+        const userRef = await createUserProfileDocument(userAuth);
+        console.log("User ref:", userRef); // Log the result of createUserProfileDocument
+        if (userRef) {
+          userRef.onSnapshot((snapshot) => {
+            console.log(snapshot.data());
+          });
+        } else {
+          console.error("User reference is undefined");
+        }
+      }
     });
   }
 
   componentWillUnmount() {
-    this.unsubscribeFromAuth();
+    this.unsubscribeFromAuth && this.unsubscribeFromAuth();
   }
 
   render() {
@@ -34,9 +43,9 @@ class App extends React.Component {
       <MainAppStyled>
         <Header currentUser={this.state.currentUser} />
         <Routes>
-          <Route path="/" Component={HomePage} />
-          <Route path="/shop" Component={ShopPage} />
-          <Route path="/signin" Component={SignInAndSignUP} />
+          <Route path="/" element={<HomePage />} />
+          <Route path="/shop" element={<ShopPage />} />
+          <Route path="/signin" element={<SignInAndSignUP />} />
         </Routes>
       </MainAppStyled>
     );
