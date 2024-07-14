@@ -6,6 +6,8 @@ import { auth } from "../../firebase/firebase.utils";
 
 import { connect } from "react-redux";
 
+import CartIcon from "../shopping-icon/shopping-icon";
+
 const Header = ({ currentUser }) => {
   return (
     <HeaderStyled>
@@ -28,6 +30,8 @@ const Header = ({ currentUser }) => {
             SIGN IN
           </Link>
         )}
+
+        <CartIcon />
       </div>
     </HeaderStyled>
   );
