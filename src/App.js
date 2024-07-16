@@ -6,36 +6,44 @@ import styled from "styled-components";
 import Header from "./components/header/header.component";
 import SignInAndSignUP from "./pages/sign-in-and-sign-up/sign-in-and-sign-up.component";
 import { auth, createUserProfileDocument } from "./firebase/firebase.utils";
+import { useDispatch } from "react-redux";
+import { currentUser } from "./features/user/userSlicer";
+
+import { connect } from "react-redux";
 
 class App extends React.Component {
-  constructor() {
-    super();
-    this.state = {
-      currentUser: null,
-    };
-  }
-
   unsubscribeFromAuth = null;
 
   componentDidMount() {
     this.unsubscribeFromAuth = auth.onAuthStateChanged(async (userAuth) => {
-      console.log("Authentication state changed:", userAuth); // Add this line
       if (userAuth) {
         const userRef = await createUserProfileDocument(userAuth);
         if (userRef) {
-          userRef.onSnapshot((snapshot) => {
-            console.log(snapshot.data());
+          userRef.onSnapshot((snapShot) => {
+            const userData = snapShot.data();
+            this.props.dispatch(
+              currentUser({
+                id: snapShot.id,
+                ...snapShot.data(),
+              })
+            );
           });
         } else {
           console.error("User reference is undefined");
         }
       }
+
+      this.props.dispatch(currentUser(userAuth));
     });
   }
 
   componentWillUnmount() {
     this.unsubscribeFromAuth && this.unsubscribeFromAuth();
   }
+
+  static mapDispatchToProps = (dispatch) => ({
+    dispatch,
+  });
 
   render() {
     return (
@@ -67,4 +75,7 @@ const MainAppStyled = styled.div`
   }
 `;
 
-export default App;
+export default connect(
+  null,
+  App.mapDispatchToProps
+)(App);

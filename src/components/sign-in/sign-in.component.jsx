@@ -17,20 +17,35 @@ class SignIn extends React.Component {
 
   handleSubmit = async (event) => {
     event.preventDefault();
-
     const { email, password } = this.state;
-
     try {
-      await auth.createUserWithEmailAndPassword(email, password);
-
+      await auth.signInWithEmailAndPassword(email, password);
       this.setState({
         email: "",
         password: "",
       });
     } catch (error) {
-      console.error(error);
+      console.error(error.code, error.message); // Log the error code and message for debugging
+      switch (error.code) {
+        case "auth/user-not-found":
+          alert("No account found with this email.");
+          break;
+        case "auth/wrong-password":
+          alert("Wrong password.");
+          break;
+        case "auth/invalid-email":
+          alert("Email address is malformed.");
+          break;
+        case "auth/user-disabled":
+          alert("User account is disabled.");
+          break;
+        case "auth/too-many-requests":
+          alert("Too many attempts. Please try again later.");
+          break;
+        default:
+          alert("An unknown error occurred. Please try signing in again.");
+      }
     }
-    // this.setState({ email: "", password: "" });
   };
 
   handleChange = (event) => {
@@ -41,7 +56,7 @@ class SignIn extends React.Component {
   render() {
     return (
       <SignInStyled>
-        <h2>I have Already An Account</h2>
+        <h2>I Already Have An Account</h2>
         <p>Sign In With Email and Password.</p>
         <form onSubmit={this.handleSubmit}>
           <FormInput
@@ -49,7 +64,7 @@ class SignIn extends React.Component {
             name="email"
             value={this.state.email}
             handleChange={this.handleChange}
-            label="email"
+            label="Email"
             required
           />
           <FormInput
@@ -57,12 +72,12 @@ class SignIn extends React.Component {
             name="password"
             value={this.state.password}
             handleChange={this.handleChange}
-            label="password"
+            label="Password"
             required
           />
 
-          <div className="button">
-            <CustomButton type="submit">Submit Form</CustomButton>
+          <div className="buttons">
+            <CustomButton type="submit">Sign In</CustomButton>
             <CustomButton
               onClick={signInWithGoogle}
               type="button"
