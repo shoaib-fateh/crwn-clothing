@@ -15,6 +15,7 @@ class App extends React.Component {
   unsubscribeFromAuth = null;
 
   componentDidMount() {
+
     this.unsubscribeFromAuth = auth.onAuthStateChanged(async (userAuth) => {
       if (userAuth) {
         const userRef = await createUserProfileDocument(userAuth);
@@ -75,7 +76,4 @@ const MainAppStyled = styled.div`
   }
 `;
 
-export default connect(
-  null,
-  App.mapDispatchToProps
-)(App);
+export default connect(null, App.mapDispatchToProps)(App);

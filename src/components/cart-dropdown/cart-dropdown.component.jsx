@@ -5,7 +5,7 @@ import styled from "styled-components";
 
 const CartDropdown = () => {
   return (
-    <CartDropdownStyled>
+    <CartDropdownStyled className={`hidden`}>
       <div className="cart-item">
         <CustomButton>GO TO CHECKOUT</CustomButton>
       </div>
@@ -25,6 +25,10 @@ const CartDropdownStyled = styled.div`
   top: 90px;
   right: 40px;
   z-index: 5;
+
+  &.hidden {
+    display: none;
+  }
 
   .cart-items {
     height: 240px;

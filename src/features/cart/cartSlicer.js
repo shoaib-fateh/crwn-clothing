@@ -1,18 +1,17 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-const initialState = {
-  hidden: false,
-};
-
-export const cartSlice = createSlice({
-  name: "toggleCartHidden",
-  initialState,
+const cartSlice = createSlice({
+  name: "cart",
+  initialState: {
+    hidden: false,
+  },
   reducers: {
-    hidden: (state) => {
+    toggleCartHidden: (state) => {
       state.hidden = !state.hidden;
     },
   },
 });
 
-export const { hidden } = cartSlice.actions;
-export default cartSlice.reducers;
+export const { toggleCartHidden } = cartSlice.actions;
+
+export default cartSlice.reducer;
