@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import CustomButton from "../custom-button/custom-button.component";
 
 const CollectionItems = ({ imageUrl, name, price }) => {
   return (
@@ -14,16 +15,17 @@ const CollectionItems = ({ imageUrl, name, price }) => {
         <div className="name">{name}</div>
         <div className="price">${price}</div>
       </div>
+
+      <CustomButton inverted>Add To Card</CustomButton>
     </CollectionItemsStyled>
   );
 };
 
 const CollectionItemsStyled = styled.div`
   width: 22%;
-  display: flex;
-  flex-direction: column;
   height: 350px;
   align-items: center;
+  position: relative;
 
   .image {
     width: 100%;
@@ -47,6 +49,30 @@ const CollectionItemsStyled = styled.div`
 
     .price {
       width: 10%;
+    }
+  }
+
+  .custom-button {
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    font-size: 12px;
+    width: 85%;
+    opacity: 0.8;
+    top: 255px;
+    border: none !important;
+    transform: translate(9%, 0%);
+    display: none;
+  }
+
+  &:hover {
+    .image {
+      opacity: 0.8
+    }
+
+    .custom-button {
+      opacity: 0.85;
+      display: flex
     }
   }
 `;
