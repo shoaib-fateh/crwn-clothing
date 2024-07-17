@@ -2,7 +2,11 @@ import React from "react";
 import styled from "styled-components";
 import CustomButton from "../custom-button/custom-button.component";
 
-const CollectionItems = ({ imageUrl, name, price }) => {
+import { connect } from "react-redux";
+import { addItem } from "../../features/cart/cartSlicer";
+
+const CollectionItems = ({ item, addItem }) => {
+  const { imageUrl, name, price } = item;
   return (
     <CollectionItemsStyled>
       <div
@@ -16,7 +20,9 @@ const CollectionItems = ({ imageUrl, name, price }) => {
         <div className="price">${price}</div>
       </div>
 
-      <CustomButton inverted>Add To Card</CustomButton>
+      <CustomButton onClick={() => addItem(item)} inverted>
+        Add To Card
+      </CustomButton>
     </CollectionItemsStyled>
   );
 };
@@ -67,14 +73,18 @@ const CollectionItemsStyled = styled.div`
 
   &:hover {
     .image {
-      opacity: 0.8
+      opacity: 0.8;
     }
 
     .custom-button {
       opacity: 0.85;
-      display: flex
+      display: flex;
     }
   }
 `;
 
-export default CollectionItems;
+const mapDispatchToProps = (dispatch) => ({
+  addItem: (item) => dispatch(addItem(item)),
+});
+
+export default connect(null, mapDispatchToProps)(CollectionItems);
