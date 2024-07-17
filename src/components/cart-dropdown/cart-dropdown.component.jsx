@@ -5,7 +5,7 @@ import styled from "styled-components";
 
 const CartDropdown = () => {
   return (
-    <CartDropdownStyled className={`hidden`}>
+    <CartDropdownStyled>
       <div className="cart-item">
         <CustomButton>GO TO CHECKOUT</CustomButton>
       </div>
