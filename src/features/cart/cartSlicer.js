@@ -1,12 +1,11 @@
 import { createSlice } from "@reduxjs/toolkit";
-
 import { addItemToDo } from "./cart.utils";
 
 const cartSlice = createSlice({
   name: "cart",
   initialState: {
     hidden: true,
-    cartItem: [],
+    cartItems: [],
   },
   reducers: {
     toggleCartHidden: (state) => {
@@ -14,8 +13,7 @@ const cartSlice = createSlice({
     },
 
     addItem: (state, action) => {
-      state.cartItem = addItemToDo(state.cartItem, action.payload);
-      console.log(state.cartItem);
+      state.cartItems = addItemToDo(state.cartItems, action.payload);
     },
   },
 });
