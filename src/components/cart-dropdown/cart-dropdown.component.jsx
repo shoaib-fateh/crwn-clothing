@@ -10,7 +10,7 @@ import { connect } from "react-redux";
 const CartDropdown = ({ cartItems }) => {
   return (
     <CartDropdownStyled>
-      <div className="cart-item">
+      <div className="cart-items">
         {cartItems.map((cartItems) => (
           <CartItem id={cartItems.id} item={cartItems} />
         ))}
@@ -32,10 +32,6 @@ const CartDropdownStyled = styled.div`
   top: 90px;
   right: 40px;
   z-index: 5;
-
-  &.hidden {
-    display: none;
-  }
 
   .cart-items {
     height: 240px;
