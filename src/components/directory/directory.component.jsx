@@ -45,7 +45,7 @@ class Directory extends React.Component {
       ],
     };
   }
-  
+
   // OSP - Other Section Props
   render() {
     return (
