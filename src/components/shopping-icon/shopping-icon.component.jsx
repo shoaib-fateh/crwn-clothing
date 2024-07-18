@@ -7,6 +7,7 @@ import { connect, useDispatch } from "react-redux";
 import { toggleCartHidden } from "../../features/cart/cartSlicer";
 
 import { selectCartItemsCount } from "../../features/cart/cart.selectors";
+import { createStructuredSelector } from "reselect";
 
 const CartIcon = ({ toggleCartHidden, itemCount }) => {
   return (

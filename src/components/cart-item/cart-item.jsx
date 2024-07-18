@@ -13,7 +13,7 @@ const CartItem = ({ item: { imageUrl, price, name, quantity } }) => (
   </CartItemStyled>
 );
 
-const CartItemStyled = styled.div`
+const CartItemStyled = styled.div`  
   width: 100%;
   display: flex;
   height: 80px;

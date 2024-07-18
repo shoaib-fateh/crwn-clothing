@@ -4,20 +4,29 @@ import CartItem from "../cart-item/cart-item";
 
 import CustomButton from "../custom-button/custom-button.component";
 import styled from "styled-components";
+import { useNavigate } from "react-router-dom";
 
 import { connect } from "react-redux";
 import { selectCartItems } from "../../features/cart/cart.selectors";
 import { createStructuredSelector } from "reselect";
 
 const CartDropdown = ({ cartItems }) => {
+  const navigate = useNavigate();
   return (
     <CartDropdownStyled>
       <div className="cart-items">
-        {cartItems.map((cartItems) => (
-          <CartItem id={cartItems.id} item={cartItems} />
-        ))}
+        {cartItems.length ? (
+          (() =>
+            cartItems.map((cartItems) => (
+              <CartItem id={cartItems.id} item={cartItems} />
+            )))()
+        ) : (
+          <span className="empty-message">Your Cart is Empty.</span>
+        )}
       </div>
-      <CustomButton>GO TO CHECKOUT</CustomButton>
+      <CustomButton onClick={() => navigate("/checkout")}>
+        GO TO CHECKOUT
+      </CustomButton>
     </CartDropdownStyled>
   );
 };
@@ -40,6 +49,11 @@ const CartDropdownStyled = styled.div`
     display: flex;
     flex-direction: column;
     overflow: scroll;
+
+    .empty-message {
+      font-size: 18;
+      margin: 15px auto;
+    }
   }
 
   button {
