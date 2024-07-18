@@ -48,6 +48,7 @@
     "react-refresh": "^0.11.0",
     "react-router": "^6.24.1",
     "react-router-dom": "^6.24.1",
+    "react-stripe-checkout": "^2.6.3",
     "redux": "^5.0.1",
     "redux-logger": "^3.0.6",
     "redux-persist": "^6.0.0",
@@ -119,7 +120,7 @@
       "[/\\\\]node_modules[/\\\\].+\\.(js|jsx|mjs|cjs|ts|tsx)$",
       "^.+\\.module\\.(css|sass|scss)$"
     ],
-    "modulePaths": [ ],
+    "modulePaths": [],
     "moduleNameMapper": {
       "^react-native$": "react-native-web",
       "^.+\\.module\\.(css|sass|scss)$": "identity-obj-proxy"
