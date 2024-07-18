@@ -6,6 +6,7 @@ const cartSlice = createSlice({
   initialState: {
     hidden: true,
     cartItems: [],
+    clearItemFromCart: [],
   },
   reducers: {
     toggleCartHidden: (state) => {
@@ -15,9 +16,17 @@ const cartSlice = createSlice({
     addItem: (state, action) => {
       state.cartItems = addItemToDo(state.cartItems, action.payload);
     },
+
+    clearItemFromCart: (state, action) => {
+      const itemIdToRemove = action.payload;
+      state.cartItems = state.cartItems.filter(
+        (item) => item.id !== itemIdToRemove
+      );
+    },
   },
 });
 
-export const { toggleCartHidden, addItem } = cartSlice.actions;
+export const { toggleCartHidden, addItem, clearItemFromCart } =
+  cartSlice.actions;
 
 export default cartSlice.reducer;

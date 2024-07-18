@@ -1,7 +1,13 @@
 import React from "react";
 import styled from "styled-components";
 
-const CheckoutItem = ({ cartItem: { imageUrl, name, quantity, price } }) => {
+import { selectCartItemsDecrease } from "../../features/cart/cart.selectors";
+import { clearItemFromCart } from "../../features/cart/cartSlicer";
+
+import { connect } from "react-redux";
+
+const CheckoutItem = ({ cartItem, clearItem }) => {
+  const { imageUrl, name, quantity, price, id } = cartItem;
   return (
     <CheckoutItemStyled>
       <div className="checkout-item">
@@ -11,7 +17,9 @@ const CheckoutItem = ({ cartItem: { imageUrl, name, quantity, price } }) => {
         <span className="name">{name}</span>
         <span className="quantity">{quantity}</span>
         <span className="price">{price}</span>
-        <span className="remove-button">&#10005;</span>
+        <span className="remove-button" onClick={() => clearItem(id)}>
+          &#10005;
+        </span>
       </div>
     </CheckoutItemStyled>
   );
@@ -53,4 +61,8 @@ const CheckoutItemStyled = styled.div`
   }
 `;
 
-export default CheckoutItem;
+const mapDispatchToProps = (dispatch) => ({
+  clearItem: (itemId) => dispatch(clearItemFromCart(itemId)),
+});
+
+export default connect(null, mapDispatchToProps)(CheckoutItem);
