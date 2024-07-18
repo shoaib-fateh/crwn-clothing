@@ -6,6 +6,8 @@ import styled from "styled-components";
 import { connect, useDispatch } from "react-redux";
 import { toggleCartHidden } from "../../features/cart/cartSlicer";
 
+import { selectCartItemsCount } from "../../features/cart/cart.selectors";
+
 const CartIcon = ({ toggleCartHidden, itemCount }) => {
   return (
     <ShoppingIconStyled onClick={toggleCartHidden}>
@@ -41,11 +43,8 @@ const mapDispatchToProps = (dispatch) => ({
   toggleCartHidden: () => dispatch(toggleCartHidden()),
 });
 
-const mapStateToProps = ({ cart: { cartItems } }) => ({
-  itemCount: cartItems.reduce(
-    ((accumulatedQuantity, cartItem) => accumulatedQuantity + cartItem.quantity),
-    0
-  ),
+const mapStateToProps = (state) => ({
+  itemCount: selectCartItemsCount(state),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(CartIcon);
