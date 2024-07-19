@@ -18,7 +18,7 @@ const CheckoutItem = ({ cartItem, clearItem }) => {
         <span className="quantity">{quantity}</span>
         <span className="price">{price}</span>
         <span className="remove-button" onClick={() => clearItem(id)}>
-          &#10005;
+          &#10005; 
         </span>
       </div>
     </CheckoutItemStyled>
@@ -36,8 +36,7 @@ const CheckoutItemStyled = styled.div`
     align-items: center;
 
     .image-container {
-      width: 23%;
-      padding-right: 15px;
+      width: 20%;
 
       img {
         width: 100%;
