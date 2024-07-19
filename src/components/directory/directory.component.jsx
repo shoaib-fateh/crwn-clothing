@@ -19,7 +19,6 @@ const DirectoryMenu = styled.div`
 `;
 
 const Directory = () => {
-  // Use useSelector to access the sections from the Redux store
   const sections = useSelector(selectDirectorySections);
 
   return (
