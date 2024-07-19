@@ -5,7 +5,7 @@ import CollectionPreview from "../../components/collection-preview/collection-pr
 import { selectShopData } from "../../features/shop/shop.selector.js";
 import { useSelector } from "react-redux";
 
-const CollectionOverview = () => {
+const CollectionOverview = ({ category }) => {
   const collections = useSelector(selectShopData);
 
   return (

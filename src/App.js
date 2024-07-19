@@ -10,12 +10,12 @@ import { currentUser } from "./features/user/userSlicer";
 
 import { connect } from "react-redux";
 import CheckoutPage from "./pages/checkout/checkout.component";
+import CollectionOverview from "./components/collection-overview/collection-overview.component";
 
 class App extends React.Component {
   unsubscribeFromAuth = null;
 
   componentDidMount() {
-
     this.unsubscribeFromAuth = auth.onAuthStateChanged(async (userAuth) => {
       if (userAuth) {
         const userRef = await createUserProfileDocument(userAuth);
@@ -52,7 +52,7 @@ class App extends React.Component {
         <Header />
         <Routes>
           <Route path="/" element={<HomePage />} />
-          <Route path="/shop" element={<ShopPage />} />
+          <Route path="/shop/*" element={<ShopPage />} />
           <Route path="/checkout" element={<CheckoutPage />} />
           <Route path="/signin" element={<SignInAndSignUP />} />
         </Routes>
@@ -78,4 +78,3 @@ const MainAppStyled = styled.div`
 `;
 
 export default connect(null, App.mapDispatchToProps)(App);
-  
