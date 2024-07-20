@@ -40,7 +40,7 @@ const CheckoutPage = ({ cartItems, totalPrice }) => (
         <span>TOTAL: ${totalPrice}</span>
       </div>
 
-      <StripeCheckoutButton price={totalPrice} />
+      <StripeCheckoutButton price={totalPrice} disabled={navigator.onLine} />
     </div>
   </CheckoutPageStyled>
 );
@@ -74,6 +74,7 @@ const CheckoutPageStyled = styled.div`
     .total {
       margin-top: 30px;
       margin-left: auto;
+      margin-bottom: 20px;
       font-size: 36px;
     }
   }
