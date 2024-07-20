@@ -4,7 +4,6 @@ import CollectionOverview from "../../components/collection-overview/collection-
 import Collection from "../../components/collection/collection.component";
 
 const ShopPage = () => {
-  const location = useLocation();
   let collectionId = useParams();
   collectionId = collectionId["*"];
 

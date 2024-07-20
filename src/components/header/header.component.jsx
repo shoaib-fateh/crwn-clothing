@@ -8,7 +8,6 @@ import { connect } from "react-redux";
 
 import CartIcon from "../shopping-icon/shopping-icon.component";
 import CartDropdown from "../cart-dropdown/cart-dropdown.component";
-import { toggleCartHidden } from "../../features/cart/cartSlicer";
 import { selectHidden } from "../../features/cart/cart.selectors";
 import { selectCurrentUser } from "../../features/user/user.selectors";
 import { createStructuredSelector } from "reselect";

@@ -3,7 +3,7 @@ import React from "react";
 import { ReactComponent as ShoppingIcon } from "../../assets/shopping-bag.svg";
 import styled from "styled-components";
 
-import { connect, useDispatch } from "react-redux";
+import { connect } from "react-redux";
 import { toggleCartHidden } from "../../features/cart/cartSlicer";
 
 import { selectCartItemsCount } from "../../features/cart/cart.selectors";

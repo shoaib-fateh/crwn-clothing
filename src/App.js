@@ -10,7 +10,6 @@ import { currentUser } from "./features/user/userSlicer";
 
 import { connect } from "react-redux";
 import CheckoutPage from "./pages/checkout/checkout.component";
-import CollectionOverview from "./components/collection-overview/collection-overview.component";
 
 class App extends React.Component {
   unsubscribeFromAuth = null;
@@ -21,7 +20,7 @@ class App extends React.Component {
         const userRef = await createUserProfileDocument(userAuth);
         if (userRef) {
           userRef.onSnapshot((snapShot) => {
-            const userData = snapShot.data();
+            // const userData = snapShot.data();
             this.props.dispatch(
               currentUser({
                 id: snapShot.id,

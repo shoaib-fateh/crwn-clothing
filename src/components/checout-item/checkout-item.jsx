@@ -1,7 +1,6 @@
 import React from "react";
 import styled from "styled-components";
 
-import { selectCartItemsDecrease } from "../../features/cart/cart.selectors";
 import { clearItemFromCart } from "../../features/cart/cartSlicer";
 
 import { connect } from "react-redux";
