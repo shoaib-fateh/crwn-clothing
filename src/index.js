@@ -1,6 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import "./index.css";
+import { IndexContainerStyled } from "./index.styles";
+
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 
@@ -16,7 +17,9 @@ root.render(
   <Provider store={store}>
     <PersistGate loading={null} persistor={persistor}>
       <BrowserRouter>
-        <App />
+        <IndexContainerStyled>
+          <App />
+        </IndexContainerStyled>
       </BrowserRouter>
     </PersistGate>
   </Provider>
