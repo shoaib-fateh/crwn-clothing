@@ -5,10 +5,10 @@ import CustomButton from "../custom-button/custom-button.component";
 import { connect } from "react-redux";
 import { addItem } from "../../features/cart/cartSlicer";
 
-const CollectionItems = ({ item, addItem }) => {
+const CollectionItems = ({ item, addItem, className }) => {
   const { imageUrl, name, price } = item;
   return (
-    <CollectionItemsStyled>
+    <CollectionItemsStyled className={className}>
       <div
         className="image"
         style={{
@@ -28,11 +28,16 @@ const CollectionItems = ({ item, addItem }) => {
 };
 
 const CollectionItemsStyled = styled.div`
-  width: 22%;
   height: 350px;
   align-items: center;
   position: relative;
-
+  &.collectionPage {
+    width: 95%;
+    margin-bottom: 20px;
+  }
+  &.collectionPreview {
+    width: 22%;
+  }
   .image {
     width: 100%;
     height: 95%;

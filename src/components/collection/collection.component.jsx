@@ -15,12 +15,15 @@ const Collection = ({ collectionId }) => {
 
   return (
     <CollectionStyled>
-      
       <div className="collection-page">
         <div className="title">{title}</div>
         <div className="items">
           {collection.items.map((item) => (
-            <CollectionItems key={item.id} item={item} />
+            <CollectionItems
+              key={item.id}
+              item={item}
+              className="collectionPage"
+            />
           ))}
         </div>
       </div>
