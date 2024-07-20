@@ -5,11 +5,16 @@ import ShopPage from "./pages/shop/shop.component";
 import styled from "styled-components";
 import Header from "./components/header/header.component";
 import SignInAndSignUP from "./pages/sign-in-and-sign-up/sign-in-and-sign-up.component";
-import { auth, createUserProfileDocument } from "./firebase/firebase.utils";
+import {
+  auth,
+  createUserProfileDocument,
+  addCollectionAndDocuments,
+} from "./firebase/firebase.utils";
 import { currentUser } from "./features/user/userSlicer";
 
 import { connect } from "react-redux";
 import CheckoutPage from "./pages/checkout/checkout.component";
+import { selectShopData } from "./features/shop/shop.selector";
 
 class App extends React.Component {
   unsubscribeFromAuth = null;
@@ -33,6 +38,7 @@ class App extends React.Component {
       }
 
       this.props.dispatch(currentUser(userAuth));
+      addCollectionAndDocuments("collections", selectShopData);
     });
   }
 
