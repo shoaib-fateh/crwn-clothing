@@ -16,7 +16,7 @@ const initialState = {
     },
     {
       title: "sneakers",
-      imageUrl: "https://i.ibb.co/0jqHpnp/sneakers.png",
+      imageUrl: "https://i.ibb.co/0s3pdnc/adidas-nmd.png",
       id: 3,
       url: "sneakers",
     },

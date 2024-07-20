@@ -5,6 +5,12 @@ const SHOP_DATA = [
     routeName: "hats",
     items: [
       {
+        id: 0,
+        name: "Cap",
+        imageUrl: "https://i.ibb.co/cvpntL1/hats.png",
+        price: 15,
+      },
+      {
         id: 1,
         name: "Brown Brim",
         imageUrl: "https://i.ibb.co/ZYW3VTp/brown-brim.png",
@@ -66,6 +72,12 @@ const SHOP_DATA = [
     routeName: "sneakers",
     items: [
       {
+        id: 10.0,
+        name: "Sport Sneakers",
+        imageUrl: "https://i.ibb.co/0s3pdnc/adidas-nmd.png",
+        price: 350,
+      },
+      {
         id: 10,
         name: "Adidas NMD",
         imageUrl: "https://i.ibb.co/0s3pdnc/adidas-nmd.png",
@@ -120,6 +132,7 @@ const SHOP_DATA = [
     title: "Jackets",
     routeName: "jackets",
     items: [
+
       {
         id: 18,
         name: "Black Jean Shearling",
