@@ -18,7 +18,7 @@ const CartDropdown = ({ cartItems, dispatch }) => {
         {cartItems.length ? (
           (() =>
             cartItems.map((cartItems) => (
-              <CartItem id={cartItems.id} item={cartItems} />
+              <CartItem key={cartItems.id} item={cartItems} />
             )))()
         ) : (
           <span className="empty-message">Your Cart is Empty.</span>
