@@ -1,5 +1,6 @@
 import React from "react";
-import { Route, Routes, useLocation, useParams } from "react-router-dom";
+import { Route, Routes, useParams } from "react-router-dom";
+
 import CollectionOverview from "../../components/collection-overview/collection-overview.component";
 import Collection from "../../components/collection/collection.component";
 
