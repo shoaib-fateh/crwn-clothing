@@ -132,7 +132,6 @@ const SHOP_DATA = [
     title: "Jackets",
     routeName: "jackets",
     items: [
-
       {
         id: 18,
         name: "Black Jean Shearling",

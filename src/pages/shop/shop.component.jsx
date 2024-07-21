@@ -4,7 +4,22 @@ import { Route, Routes, useParams } from "react-router-dom";
 import CollectionOverview from "../../components/collection-overview/collection-overview.component";
 import Collection from "../../components/collection/collection.component";
 
+import {
+  firestore,
+  convertCollectionSnashopToMap,
+} from "../../firebase/firebase.utils";
+
 class ShopPage extends Component {
+  unsubscribeFromSnapshot = null;
+
+  componentDidMount() {
+    const collectionRef = firestore.collection("collections");
+
+    collectionRef.onSnapshot(async (snapShop) => {
+      convertCollectionSnashopToMap(snapShop);
+    });
+  }
+
   renderContent() {
     const { collectionId } = this.props;
 
