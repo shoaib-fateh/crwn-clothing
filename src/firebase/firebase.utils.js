@@ -67,7 +67,10 @@ export const convertCollectionSnashopToMap = (collections) => {
     };
   });
 
-  console.log(transformedCollection);
+  return transformedCollection.reduce((accumulator, collection) => {
+    accumulator[collection.id.toLowerCase()] = collection;
+    return accumulator;
+  }, {});
 };
 
 export const auth = firebase.auth();

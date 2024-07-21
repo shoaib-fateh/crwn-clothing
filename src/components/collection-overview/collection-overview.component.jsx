@@ -7,10 +7,10 @@ import { useSelector } from "react-redux";
 
 const CollectionOverview = ({ category }) => {
   const collections = useSelector(selectShopData);
-
+  const collectionArray = Object.values(collections);
   return (
     <div className="collection-overview">
-      {collections.map(({ id, ...OCP }) => (
+      {collectionArray.map(({ id, ...OCP }) => (
         <CollectionPreview key={id} {...OCP} />
       ))}
     </div>

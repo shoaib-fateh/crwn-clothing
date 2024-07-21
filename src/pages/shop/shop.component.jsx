@@ -1,23 +1,31 @@
 import React, { Component } from "react";
 import { Route, Routes, useParams } from "react-router-dom";
-
+import { connect } from "react-redux";
 import CollectionOverview from "../../components/collection-overview/collection-overview.component";
 import Collection from "../../components/collection/collection.component";
-
 import {
   firestore,
   convertCollectionSnashopToMap,
 } from "../../firebase/firebase.utils";
+import { updateCollections } from "../../features/shop/shopSlicer";
 
 class ShopPage extends Component {
   unsubscribeFromSnapshot = null;
 
   componentDidMount() {
     const collectionRef = firestore.collection("collections");
+    this.unsubscribeFromSnapshot = collectionRef.onSnapshot(
+      async (snapShop) => {
+        const collectionMap = convertCollectionSnashopToMap(snapShop);
+        this.props.updateCollections(collectionMap);
+      }
+    );
+  }
 
-    collectionRef.onSnapshot(async (snapShop) => {
-      convertCollectionSnashopToMap(snapShop);
-    });
+  componentWillUnmount() {
+    if (this.unsubscribeFromSnapshot) {
+      this.unsubscribeFromSnapshot();
+    }
   }
 
   renderContent() {
@@ -48,4 +56,8 @@ const ShopPageWrapper = (props) => {
   return <ShopPage {...props} collectionId={collectionId} />;
 };
 
-export default ShopPageWrapper;
+const mapDispatchToProps = {
+  updateCollections,
+};
+
+export default connect(null, mapDispatchToProps)(ShopPageWrapper);

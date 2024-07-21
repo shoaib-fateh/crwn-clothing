@@ -7,7 +7,9 @@ import styled from "styled-components";
 
 const Collection = ({ collectionId }) => {
   const collections = useSelector(selectShopData);
-  let collection = collections.find(
+  const collectionArray = Object.values(collections);
+
+  let collection = collectionArray.find(
     (collection) => collection.title.toLowerCase() === collectionId
   );
 
