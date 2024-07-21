@@ -1,14 +1,13 @@
-import React from "react";
+import React, { Component } from "react";
 import { Route, Routes, useParams } from "react-router-dom";
 
 import CollectionOverview from "../../components/collection-overview/collection-overview.component";
 import Collection from "../../components/collection/collection.component";
 
-const ShopPage = () => {
-  let collectionId = useParams();
-  collectionId = collectionId["*"];
+class ShopPage extends Component {
+  renderContent() {
+    const { collectionId } = this.props;
 
-  const renderContent = () => {
     if (collectionId) {
       return (
         <Routes>
@@ -21,9 +20,17 @@ const ShopPage = () => {
     } else {
       return <CollectionOverview />;
     }
-  };
+  }
 
-  return <div className="shop-page">{renderContent()}</div>;
+  render() {
+    return <div className="shop-page">{this.renderContent()}</div>;
+  }
+}
+
+const ShopPageWrapper = (props) => {
+  const { "*": collectionId } = useParams(); // Use '*' to match the rest of the URL
+
+  return <ShopPage {...props} collectionId={collectionId} />;
 };
 
-export default ShopPage;
+export default ShopPageWrapper;
