@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { useSelector } from "react-redux";
 import { Routes, Route } from "react-router-dom";
 import HomePage from "./pages/homepage/homepage.component";
 import ShopPage from "./pages/shop/shop.component";
@@ -11,59 +12,10 @@ import {
   addCollectionAndDocuments,
 } from "./firebase/firebase.utils";
 import { currentUser } from "./features/user/userSlicer";
-
 import { connect } from "react-redux";
 import CheckoutPage from "./pages/checkout/checkout.component";
 import { selectShopData } from "./features/shop/shop.selector";
-
-class App extends React.Component {
-  unsubscribeFromAuth = null;
-
-  componentDidMount() {
-    this.unsubscribeFromAuth = auth.onAuthStateChanged(async (userAuth) => {
-      if (userAuth) {
-        const userRef = await createUserProfileDocument(userAuth);
-        if (userRef) {
-          userRef.onSnapshot((snapShot) => {
-            this.props.dispatch(
-              currentUser({
-                id: snapShot.id,
-                ...snapShot.data(),
-              })
-            );
-          });
-        } else {
-          console.error("User reference is undefined");
-        }
-      }
-
-      this.props.dispatch(currentUser(userAuth));
-      addCollectionAndDocuments("collections", selectShopData);
-    });
-  }
-
-  componentWillUnmount() {
-    this.unsubscribeFromAuth && this.unsubscribeFromAuth();
-  }
-
-  static mapDispatchToProps = (dispatch) => ({
-    dispatch,
-  });
-
-  render() {
-    return (
-      <MainAppStyled>
-        <Header />
-        <Routes>
-          <Route path="/" element={<HomePage />} />
-          <Route path="/shop/*" element={<ShopPage />} />
-          <Route path="/checkout" element={<CheckoutPage />} />
-          <Route path="/signin" element={<SignInAndSignUP />} />
-        </Routes>
-      </MainAppStyled>
-    );
-  }
-}
+import { useDispatch } from "react-redux";
 
 const MainAppStyled = styled.div`
   font-family: "Encode Sans Condensed", sans-serif;
@@ -81,4 +33,58 @@ const MainAppStyled = styled.div`
   }
 `;
 
-export default connect(null, App.mapDispatchToProps)(App);
+// Functional component version of App
+const App = () => {
+  const shopData = useSelector(selectShopData);
+  const dispatch = useDispatch(); // Use useDispatch hook for dispatching actions
+
+  useEffect(() => {
+    const unsubscribeFromAuth = auth.onAuthStateChanged(async (userAuth) => {
+      if (userAuth) {
+        const userRef = await createUserProfileDocument(userAuth);
+        if (userRef) {
+          userRef.onSnapshot((snapShot) => {
+            dispatch(
+              currentUser({
+                id: snapShot.id,
+                ...snapShot.data(),
+              })
+            );
+          });
+        } else {
+          console.error("User reference is undefined");
+        }
+      }
+
+      dispatch(currentUser(userAuth));
+
+      if (shopData) {
+        addCollectionAndDocuments(
+          "collections",
+          shopData.map(({ title, items }) => ({ title, items }))
+        );
+        console.log(
+          "Shop Data:",
+          shopData.map(({ title, items }) => ({ title, items }))
+        );
+      }
+    });
+
+    return () => unsubscribeFromAuth(); // Cleanup subscription on unmount
+  }, [dispatch, shopData]);
+
+  return (
+    <MainAppStyled>
+      <Header />
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+        <Route path="/shop/*" element={<ShopPage />} />
+        <Route path="/checkout" element={<CheckoutPage />} />
+        <Route path="/signin" element={<SignInAndSignUP />} />
+      </Routes>
+    </MainAppStyled>
+  );
+};
+
+// Export the connected component
+export default connect()(App);
