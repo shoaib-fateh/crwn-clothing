@@ -20,8 +20,6 @@ const LoaderWithSpinner = WithSpinner(<h1>Your are Offline...</h1>);
 class ShopPage extends Component {
   state = {
     isLoading: true,
-    // navigatorOnLine: navigator.onLine,
-    navigatorOnLine: true,
   };
 
   unsubscribeFromSnapshot = null;
@@ -32,11 +30,9 @@ class ShopPage extends Component {
       async (snapShop) => {
         const collectionMap = convertCollectionSnashopToMap(snapShop);
         this.props.updateCollections(collectionMap);
-        if (this.state.navigatorOnLine) {
-          this.setState({
-            isLoading: false,
-          });
-        }
+        this.setState({
+          isLoading: false,
+        });
       }
     );
   }
@@ -51,29 +47,25 @@ class ShopPage extends Component {
     const { collectionId, isCollectionLoaded } = this.props;
     const { isLoading } = this.state;
 
-    if (this.state.navigatorOnLine) {
-      if (collectionId) {
-        return (
-          <Routes>
-            <Route
-              path=":collectionId"
-              element={
-                <CollectionWithSpinner
-                  isLoading={isLoading}
-                  collectionId={collectionId}
-                />
-              }
-            />
-          </Routes>
-        );
-      } else {
-        return <CollectionOverviewWithSpinner isLoading={isLoading} />;
-      }
+    if (collectionId) {
+      return (
+        <Routes>
+          <Route
+            path=":collectionId"
+            element={
+              <CollectionWithSpinner
+                isLoading={isLoading}
+                collectionId={collectionId}
+              />
+            }
+          />
+        </Routes>
+      );
     } else {
-      return <LoaderWithSpinner isLoading={true} />;
+      return <CollectionOverviewWithSpinner isLoading={isLoading} />;
     }
   }
-
+  
   render() {
     return <div className="shop-page">{this.renderContent()}</div>;
   }
