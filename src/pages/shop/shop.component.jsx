@@ -9,7 +9,21 @@ import {
 } from "../../firebase/firebase.utils";
 import { updateCollections } from "../../features/shop/shopSlicer";
 
+import WithSpinner from "../../components/with-spinner/with-spinner.component";
+import { selectCollectionIsLoaded } from "../../features/shop/shop.selector";
+import { createStructuredSelector } from "reselect";
+
+const CollectionWithSpinner = WithSpinner(Collection);
+const CollectionOverviewWithSpinner = WithSpinner(CollectionOverview);
+const LoaderWithSpinner = WithSpinner(<h1>Your are Offline...</h1>);
+
 class ShopPage extends Component {
+  state = {
+    isLoading: true,
+    // navigatorOnLine: navigator.onLine,
+    navigatorOnLine: true,
+  };
+
   unsubscribeFromSnapshot = null;
 
   componentDidMount() {
@@ -18,6 +32,11 @@ class ShopPage extends Component {
       async (snapShop) => {
         const collectionMap = convertCollectionSnashopToMap(snapShop);
         this.props.updateCollections(collectionMap);
+        if (this.state.navigatorOnLine) {
+          this.setState({
+            isLoading: false,
+          });
+        }
       }
     );
   }
@@ -29,19 +48,29 @@ class ShopPage extends Component {
   }
 
   renderContent() {
-    const { collectionId } = this.props;
+    const { collectionId, isCollectionLoaded } = this.props;
+    const { isLoading } = this.state;
 
-    if (collectionId) {
-      return (
-        <Routes>
-          <Route
-            path=":collectionId"
-            element={<Collection collectionId={collectionId} />}
-          />
-        </Routes>
-      );
+    if (this.state.navigatorOnLine) {
+      if (collectionId) {
+        return (
+          <Routes>
+            <Route
+              path=":collectionId"
+              element={
+                <CollectionWithSpinner
+                  isLoading={isLoading}
+                  collectionId={collectionId}
+                />
+              }
+            />
+          </Routes>
+        );
+      } else {
+        return <CollectionOverviewWithSpinner isLoading={isLoading} />;
+      }
     } else {
-      return <CollectionOverview />;
+      return <LoaderWithSpinner isLoading={true} />;
     }
   }
 
@@ -51,7 +80,7 @@ class ShopPage extends Component {
 }
 
 const ShopPageWrapper = (props) => {
-  const { "*": collectionId } = useParams(); // Use '*' to match the rest of the URL
+  const { "*": collectionId } = useParams();
 
   return <ShopPage {...props} collectionId={collectionId} />;
 };
@@ -60,4 +89,8 @@ const mapDispatchToProps = {
   updateCollections,
 };
 
-export default connect(null, mapDispatchToProps)(ShopPageWrapper);
+const mapStateToProps = createStructuredSelector({
+  isCollectionLoaded: selectCollectionIsLoaded,
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(ShopPageWrapper);

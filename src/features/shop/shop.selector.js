@@ -21,3 +21,8 @@ export const selectCollection = (collectionUrlParam) =>
       (collection) => collection.id === COLLECTION_ID_MAP[collectionUrlParam]
     )
   );
+
+export const selectCollectionIsLoaded = createSelector(
+  [selectShop],
+  (shop) => !!shop.collections
+);
