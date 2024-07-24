@@ -11,16 +11,14 @@ import { currentUser } from "./features/user/userSlicer";
 import { connect } from "react-redux";
 import CheckoutPage from "./pages/checkout/checkout.component";
 
-class App extends React.Component {
-  unsubscribeFromAuth = null;
-
-  componentDidMount() {
-    this.unsubscribeFromAuth = auth.onAuthStateChanged(async (userAuth) => {
+const App = ({ currentUser, dispatch }) => {
+  useEffect(() => {
+    auth.onAuthStateChanged(async (userAuth) => {
       if (userAuth) {
         const userRef = await createUserProfileDocument(userAuth);
         if (userRef) {
           userRef.onSnapshot((snapShot) => {
-            this.props.dispatch(
+            dispatch(
               currentUser({
                 id: snapShot.id,
                 ...snapShot.data(),
@@ -32,32 +30,22 @@ class App extends React.Component {
         }
       }
 
-      this.props.dispatch(currentUser(userAuth));
+      dispatch(currentUser(userAuth));
     });
-  }
+  }, [currentUser, dispatch]);
 
-  componentWillUnmount() {
-    this.unsubscribeFromAuth && this.unsubscribeFromAuth();
-  }
-
-  static mapDispatchToProps = (dispatch) => ({
-    dispatch,
-  });
-
-  render() {
-    return (
-      <MainAppStyled>
-        <Header />
-        <Routes>
-          <Route path="/" element={<HomePage />} />
-          <Route path="/shop/*" element={<ShopPage />} />
-          <Route path="/checkout" element={<CheckoutPage />} />
-          <Route path="/signin" element={<SignInAndSignUP />} />
-        </Routes>
-      </MainAppStyled>
-    );
-  }
-}
+  return (
+    <MainAppStyled>
+      <Header />
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+        <Route path="/shop/*" element={<ShopPage />} />
+        <Route path="/checkout" element={<CheckoutPage />} />
+        <Route path="/signin" element={<SignInAndSignUP />} />
+      </Routes>
+    </MainAppStyled>
+  );
+};
 
 const MainAppStyled = styled.div`
   font-family: "Encode Sans Condensed", sans-serif;
@@ -75,4 +63,12 @@ const MainAppStyled = styled.div`
   }
 `;
 
-export default connect(null, App.mapDispatchToProps)(App);
+const mapStateToProps = (state) => ({
+  currentUser: state.user.currentUser,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  dispatch: (action) => dispatch(action),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);
