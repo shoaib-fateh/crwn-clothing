@@ -17,7 +17,7 @@ const CheckoutItem = ({ cartItem, clearItem }) => {
         <span className="quantity">{quantity}</span>
         <span className="price">{price}</span>
         <span className="remove-button" onClick={() => clearItem(id)}>
-          &#10005; 
+          &#10005;
         </span>
       </div>
     </CheckoutItemStyled>
