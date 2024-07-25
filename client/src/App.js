@@ -10,6 +10,7 @@ import { currentUser } from "./features/user/userSlicer";
 
 import { connect } from "react-redux";
 import CheckoutPage from "./pages/checkout/checkout.component";
+import { userSlice } from "./features/user/userSlicer"; // Import the userSlice
 
 const App = ({ currentUser, dispatch }) => {
   useEffect(() => {
@@ -19,7 +20,8 @@ const App = ({ currentUser, dispatch }) => {
         if (userRef) {
           userRef.onSnapshot((snapShot) => {
             dispatch(
-              currentUser({
+              userSlice.actions.currentUser({
+                // Correctly use the action creator
                 id: snapShot.id,
                 ...snapShot.data(),
               })
@@ -29,10 +31,8 @@ const App = ({ currentUser, dispatch }) => {
           console.error("User reference is undefined");
         }
       }
-
-      dispatch(currentUser(userAuth));
     });
-  }, [currentUser, dispatch]);
+  }, [dispatch]);
 
   return (
     <MainAppStyled>
